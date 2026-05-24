@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "@tanstack/react-router";
 
 export function AdminToggle() {
-  const navigate = useNavigate();
   const [clicks, setClicks] = useState<number[]>([]);
 
   useEffect(() => {
@@ -10,9 +8,10 @@ export function AdminToggle() {
     const recent = clicks.filter((t) => Date.now() - t < 3000);
     if (recent.length >= 3) {
       setClicks([]);
-      navigate({ to: "/admin/login" });
+      // Admin route will be created in a follow-up turn
+      window.location.href = "/admin/login";
     }
-  }, [clicks, navigate]);
+  }, [clicks]);
 
   return (
     <button
