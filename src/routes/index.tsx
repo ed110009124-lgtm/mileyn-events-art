@@ -1,26 +1,68 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { IntroAnimation } from "@/components/site/IntroAnimation";
+import { Navbar } from "@/components/site/Navbar";
+import { Hero } from "@/components/site/Hero";
+import { About } from "@/components/site/About";
+import { Services } from "@/components/site/Services";
+import { Portfolio } from "@/components/site/Portfolio";
+import { Team } from "@/components/site/Team";
+import { Testimonials } from "@/components/site/Testimonials";
+import { Contact } from "@/components/site/Contact";
+import { Footer } from "@/components/site/Footer";
+import { ScrollProgress } from "@/components/site/ScrollProgress";
+import { CustomCursor } from "@/components/site/CustomCursor";
+import { ConciergeIndicator } from "@/components/site/ConciergeIndicator";
+import { QuickInquiry } from "@/components/site/QuickInquiry";
+import { AdminToggle } from "@/components/site/AdminToggle";
 
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Mileyn Events — Curators of Refined Experiences" },
+      { name: "description", content: "Luxury event planning. Weddings, galas, and private celebrations curated with quiet precision." },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. For sites with multiple pages (About, Services, Contact, etc.),
-// create separate route files (about.tsx, services.tsx, contact.tsx) — don't put all pages in this file.
-function PlaceholderIndex() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
-}
-
 function Index() {
-  return <PlaceholderIndex />;
+  const [introDone, setIntroDone] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const played = sessionStorage.getItem("mileynIntroPlayed") === "true";
+    setIntroDone(played);
+  }, []);
+
+  const handleIntroComplete = () => {
+    sessionStorage.setItem("mileynIntroPlayed", "true");
+    setIntroDone(true);
+  };
+
+  if (introDone === null) {
+    return <div className="fixed inset-0 bg-espresso" />;
+  }
+
+  return (
+    <main className="relative bg-cream text-espresso">
+      {!introDone && <IntroAnimation onComplete={handleIntroComplete} />}
+      <CustomCursor />
+      <ScrollProgress />
+      <Navbar visible={introDone} />
+
+      <Hero ready={introDone} />
+      <About />
+      <Services />
+      <Portfolio />
+      <Team />
+      <Testimonials />
+      <Contact />
+      <Footer />
+
+      <ConciergeIndicator />
+      <QuickInquiry />
+      <AdminToggle />
+    </main>
+  );
 }
