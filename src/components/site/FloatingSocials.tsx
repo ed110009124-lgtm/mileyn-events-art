@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { SOCIAL } from "@/data/site";
+import { useContent } from "@/lib/content";
 import { WhatsAppIcon, InstagramIcon, EmailIcon } from "./BrandIcons";
 
 export function FloatingSocials() {
+  const SOCIAL = useContent().social;
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {

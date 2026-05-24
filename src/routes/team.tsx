@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
-import { TEAM_FULL } from "@/data/site";
+import { useContent } from "@/lib/content";
 import { GoldenThread } from "@/components/site/GoldenThread";
 import { SocialLinks } from "@/components/site/SocialLinks";
 
@@ -16,6 +16,7 @@ export const Route = createFileRoute("/team")({
 });
 
 function TeamPage() {
+  const TEAM_FULL = useContent().teamFull;
   return (
     <main className="bg-cream text-espresso min-h-screen">
       <section className="relative bg-espresso text-cream py-24 px-6 md:px-12">
