@@ -5,6 +5,15 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { GoldenThread } from "./GoldenThread";
 import { PROJECTS } from "@/data/site";
 
+const PORTFOLIO_CTAS = [
+  "Step Inside",
+  "Read The Story",
+  "Walk The Garden",
+  "Open The Album",
+  "Hear The Brand",
+  "Pull Up A Chair",
+];
+
 export function Portfolio() {
   const scrollerRef = useRef<HTMLDivElement>(null);
 
