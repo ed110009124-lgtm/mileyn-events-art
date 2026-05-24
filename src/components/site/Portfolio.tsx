@@ -5,6 +5,15 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { GoldenThread } from "./GoldenThread";
 import { PROJECTS } from "@/data/site";
 
+const PORTFOLIO_CTAS = [
+  "Step Inside",
+  "Read The Story",
+  "Walk The Garden",
+  "Open The Album",
+  "Hear The Brand",
+  "Pull Up A Chair",
+];
+
 export function Portfolio() {
   const scrollerRef = useRef<HTMLDivElement>(null);
 
@@ -68,8 +77,8 @@ export function Portfolio() {
                 <div className="absolute inset-x-0 bottom-0 p-6">
                   <p className="text-amber-gold/80 text-[10px] uppercase tracking-[0.3em]">{item.type}</p>
                   <h3 className="font-display text-2xl text-cream mt-1">{item.name}</h3>
-                  <span className="mt-2 inline-block text-amber-gold text-[11px] uppercase tracking-[0.25em] opacity-0 group-hover:opacity-100 transition-opacity">
-                    View Experience →
+                  <span className="mt-2 inline-block text-amber-gold text-[11px] uppercase tracking-[0.25em] glow-gold-text opacity-0 group-hover:opacity-100 transition-opacity">
+                    {PORTFOLIO_CTAS[i % PORTFOLIO_CTAS.length]} →
                   </span>
                 </div>
               </Link>
