@@ -1,12 +1,9 @@
 import { motion } from "framer-motion";
+import { Link } from "@tanstack/react-router";
 import { GoldenThread } from "./GoldenThread";
+import { TEAM_FULL } from "@/data/site";
 
-const TEAM = [
-  { name: "Sarah", role: "The Vision Weaver", img: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=600&q=70" },
-  { name: "Michael", role: "The Calm Architect", img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=70" },
-  { name: "Amara", role: "The Floral Poet", img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=600&q=70" },
-  { name: "David", role: "The Production Maestro", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=70" },
-];
+const TEAM = TEAM_FULL;
 
 export function Team() {
   return (
@@ -43,9 +40,9 @@ export function Team() {
         </div>
 
         <div className="mt-12 text-center">
-          <a href="#contact" className="thread-link text-amber-gold text-xs uppercase tracking-[0.25em]">
+          <Link to="/team" className="thread-link text-amber-gold text-xs uppercase tracking-[0.25em]">
             Meet The Full Team →
-          </a>
+          </Link>
         </div>
       </div>
     </section>
