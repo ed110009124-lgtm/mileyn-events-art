@@ -1,6 +1,6 @@
 import { createFileRoute, notFound, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { SERVICES } from "@/data/site";
+import { SERVICES, type Service } from "@/data/site";
 import { DetailLayout } from "@/components/site/DetailLayout";
 
 export const Route = createFileRoute("/services/$slug")({
@@ -32,7 +32,7 @@ export const Route = createFileRoute("/services/$slug")({
 });
 
 function ServicePage() {
-  const { service } = Route.useLoaderData();
+  const { service } = Route.useLoaderData() as { service: Service };
 
   return (
     <DetailLayout eyebrow="Service" title={service.name} heroImg={service.img}>

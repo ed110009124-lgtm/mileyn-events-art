@@ -1,6 +1,6 @@
 import { createFileRoute, notFound, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { PROJECTS } from "@/data/site";
+import { PROJECTS, type Project } from "@/data/site";
 import { DetailLayout } from "@/components/site/DetailLayout";
 
 export const Route = createFileRoute("/portfolio/$slug")({
@@ -32,7 +32,7 @@ export const Route = createFileRoute("/portfolio/$slug")({
 });
 
 function ProjectPage() {
-  const { project } = Route.useLoaderData();
+  const { project } = Route.useLoaderData() as { project: Project };
 
   return (
     <DetailLayout eyebrow={project.type} title={project.name} heroImg={project.img}>
