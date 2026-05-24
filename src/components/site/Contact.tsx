@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { GoldenThread } from "./GoldenThread";
 import { SocialLinks } from "./SocialLinks";
-import { SOCIAL } from "@/data/site";
+import { useContent } from "@/lib/content";
 
 const EVENT_TYPES = [
   "Wedding",
@@ -13,6 +13,7 @@ const EVENT_TYPES = [
 ];
 
 export function Contact() {
+  const SOCIAL = useContent().social;
   const [submitted, setSubmitted] = useState(false);
   const [pulsing, setPulsing] = useState(false);
 

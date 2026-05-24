@@ -1,8 +1,10 @@
 import { GoldenThread } from "./GoldenThread";
 import { SocialLinks } from "./SocialLinks";
-import { SOCIAL } from "@/data/site";
+import { useContent } from "@/lib/content";
 
 export function Footer() {
+  const c = useContent();
+  const SOCIAL = c.social;
   return (
     <footer className="bg-espresso text-cream px-6 py-20 md:px-10">
       <div className="mx-auto max-w-7xl flex flex-col items-center text-center">
@@ -14,7 +16,7 @@ export function Footer() {
           <GoldenThread width={60} />
         </div>
         <p className="font-display text-xl font-light italic text-cream/80 max-w-md">
-          Curators of refined experiences.
+          {c.footer.tagline}
         </p>
 
         <div className="mt-12">
@@ -29,12 +31,7 @@ export function Footer() {
           <a href={`https://instagram.com/${SOCIAL.instagram}`} target="_blank" rel="noreferrer" className="hover:text-amber-gold transition-colors">@{SOCIAL.instagram}</a>
         </div>
 
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[11px] uppercase tracking-[0.25em] text-cream/70">
-          <a href="#" className="hover:text-amber-gold transition-colors">Privacy</a>
-          <span className="h-1 w-1 rounded-full bg-amber-gold/60" />
-          <a href="#" className="hover:text-amber-gold transition-colors">Terms</a>
-        </div>
-        <p className="mt-8 text-xs text-taupe">© 2025 Mileyn Events. All rights reserved.</p>
+        <p className="mt-8 text-xs text-taupe">{c.footer.copyright}</p>
       </div>
     </footer>
   );

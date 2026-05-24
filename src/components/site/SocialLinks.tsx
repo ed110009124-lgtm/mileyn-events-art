@@ -1,7 +1,8 @@
-import { SOCIAL } from "@/data/site";
+import { useContent } from "@/lib/content";
 import { WhatsAppIcon, InstagramIcon, EmailIcon } from "./BrandIcons";
 
-export function SocialLinks({ tone = "dark" }: { tone?: "dark" | "light" }) {
+export function SocialLinks({ tone: _tone = "dark" }: { tone?: "dark" | "light" }) {
+  const SOCIAL = useContent().social;
   const wa = `https://wa.me/${SOCIAL.whatsapp.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(
     "Hello Mileyn Events — I'd like to discuss an event."
   )}`;
