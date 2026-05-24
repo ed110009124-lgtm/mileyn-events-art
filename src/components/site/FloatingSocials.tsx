@@ -51,7 +51,7 @@ export function FloatingSocials() {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 30 }}
           transition={{ duration: 0.45, ease: [0.25, 0.1, 0.25, 1] }}
-          className="fixed right-5 bottom-5 md:right-7 md:bottom-28 z-40 flex flex-col gap-3"
+          className="fixed right-4 top-1/2 -translate-y-1/2 md:right-6 z-40 flex flex-col gap-3"
         >
           {items.map(({ label, href, Icon, bg, shadow }, i) => (
             <motion.a
