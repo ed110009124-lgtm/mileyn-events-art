@@ -52,9 +52,9 @@ export function Services() {
                 <Link
                   to="/services/$slug"
                   params={{ slug: s.slug }}
-                  className="thread-link mt-5 inline-block text-amber-gold text-xs uppercase tracking-[0.25em]"
+                  className="thread-link mt-5 inline-block text-amber-gold text-xs uppercase tracking-[0.25em] font-medium glow-gold-text"
                 >
-                  Discover More →
+                  {SERVICE_CTAS[i % SERVICE_CTAS.length]} →
                 </Link>
               </div>
             </motion.article>
