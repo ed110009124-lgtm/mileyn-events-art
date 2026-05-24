@@ -1,5 +1,5 @@
-import { MessageCircle, Mail, Instagram } from "lucide-react";
 import { SOCIAL } from "@/data/site";
+import { WhatsAppIcon, InstagramIcon, EmailIcon } from "./BrandIcons";
 
 export function SocialLinks({ tone = "dark" }: { tone?: "dark" | "light" }) {
   const wa = `https://wa.me/${SOCIAL.whatsapp.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(
@@ -9,26 +9,28 @@ export function SocialLinks({ tone = "dark" }: { tone?: "dark" | "light" }) {
   const mail = `mailto:${SOCIAL.email}?subject=${encodeURIComponent("Event Inquiry — Mileyn Events")}`;
 
   const items = [
-    { Icon: MessageCircle, href: wa, label: "WhatsApp" },
-    { Icon: Mail, href: mail, label: "Email" },
-    { Icon: Instagram, href: ig, label: "Instagram" },
+    { Icon: WhatsAppIcon, href: wa, label: "WhatsApp", brand: "bg-[#25D366] text-white" },
+    {
+      Icon: InstagramIcon,
+      href: ig,
+      label: "Instagram",
+      brand: "bg-gradient-to-br from-[#feda75] via-[#d62976] to-[#4f5bd5] text-white",
+    },
+    { Icon: EmailIcon, href: mail, label: "Email", brand: "bg-amber-gold text-espresso" },
   ];
-
-  const ring = tone === "dark" ? "border-amber-gold/60 hover:bg-amber-gold" : "border-amber-gold hover:bg-amber-gold";
-  const icon = tone === "dark" ? "text-amber-gold group-hover:text-espresso" : "text-amber-gold group-hover:text-cream";
 
   return (
     <div className="flex gap-3">
-      {items.map(({ Icon, href, label }) => (
+      {items.map(({ Icon, href, label, brand }) => (
         <a
           key={label}
           href={href}
           target={href.startsWith("mailto") ? undefined : "_blank"}
           rel="noreferrer"
           aria-label={label}
-          className={`group flex h-10 w-10 items-center justify-center rounded-full border transition-colors ${ring}`}
+          className={`group flex h-11 w-11 items-center justify-center rounded-full transition-transform hover:scale-110 ${brand} shadow-[0_6px_18px_-6px_rgba(0,0,0,0.35)]`}
         >
-          <Icon className={`h-4 w-4 transition-colors ${icon}`} strokeWidth={1.4} />
+          <Icon className="h-5 w-5" />
         </a>
       ))}
     </div>

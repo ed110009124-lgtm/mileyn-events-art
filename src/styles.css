@@ -44,14 +44,14 @@
 }
 
 :root {
-  /* Brand palette */
-  --cream: oklch(0.972 0.008 80);            /* #F9F7F4 */
-  --espresso: oklch(0.282 0.025 40);         /* #3C2A24 */
-  --amber-gold: oklch(0.745 0.082 75);       /* #C8A97E */
-  --amber-gold-soft: oklch(0.745 0.082 75 / 0.6);
-  --champagne: oklch(0.88 0.025 65);         /* #E8D5C4 */
-  --taupe: oklch(0.6 0.018 60);              /* #8A7E72 */
-  --charcoal: oklch(0.22 0.018 35);          /* #2A1F1C */
+  /* Brand palette — sharper, more saturated, glow-ready */
+  --cream: oklch(0.974 0.01 82);             /* #FAF8F4 */
+  --espresso: oklch(0.255 0.032 40);         /* deeper richer espresso */
+  --amber-gold: oklch(0.78 0.13 78);         /* sharper saturated gold */
+  --amber-gold-soft: oklch(0.78 0.13 78 / 0.6);
+  --champagne: oklch(0.89 0.04 70);          /* warmer champagne */
+  --taupe: oklch(0.55 0.025 55);             /* darker for legibility */
+  --charcoal: oklch(0.18 0.022 35);          /* deeper charcoal */
 
   /* Shadcn semantic mapping */
   --radius: 0.5rem;
@@ -165,6 +165,18 @@
   }
   .gold-sweep:hover::before { transform: translateX(110%); }
   .gold-sweep > * { position: relative; z-index: 1; }
+
+  /* Soft glow utilities */
+  .glow-gold-text {
+    text-shadow:
+      0 0 18px color-mix(in oklab, var(--amber-gold) 35%, transparent),
+      0 0 1px color-mix(in oklab, var(--amber-gold) 60%, transparent);
+  }
+  .glow-gold {
+    box-shadow:
+      0 0 0 1px color-mix(in oklab, var(--amber-gold) 30%, transparent),
+      0 12px 40px -12px color-mix(in oklab, var(--amber-gold) 50%, transparent);
+  }
 
   /* Hide cursor when custom cursor is active */
   .cursor-none, .cursor-none * { cursor: none !important; }

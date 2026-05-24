@@ -16,9 +16,47 @@ export function Contact() {
   const [submitted, setSubmitted] = useState(false);
   const [pulsing, setPulsing] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setPulsing(true);
+
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    const name = String(data.get("name") || "").trim();
+    const email = String(data.get("email") || "").trim();
+    const phone = String(data.get("phone") || "").trim();
+    const eventType = String(data.get("eventType") || "").trim();
+    const message = String(data.get("message") || "").trim();
+
+    const lines = [
+      "New booking inquiry — Mileyn Events",
+      "",
+      `Name: ${name}`,
+      `Email: ${email}`,
+      `Phone: ${phone || "—"}`,
+      `Event type: ${eventType || "—"}`,
+      "",
+      "Message:",
+      message || "—",
+    ];
+    const body = lines.join("\n");
+    const subject = `Booking Inquiry — ${name || "New Lead"}${eventType ? ` (${eventType})` : ""}`;
+
+    // 1) Send to email (opens user's mail client with prefilled message)
+    const mailUrl = `mailto:${SOCIAL.email}?subject=${encodeURIComponent(
+      subject
+    )}&body=${encodeURIComponent(body)}`;
+
+    // 2) Send to WhatsApp (opens chat with same prefilled message)
+    const waNumber = SOCIAL.whatsapp.replace(/[^0-9]/g, "");
+    const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(body)}`;
+
+    // Open WhatsApp in new tab, then email in current tab — both delivery channels fire.
+    window.open(waUrl, "_blank", "noopener,noreferrer");
+    setTimeout(() => {
+      window.location.href = mailUrl;
+    }, 350);
+
     setTimeout(() => {
       setSubmitted(true);
       setPulsing(false);
@@ -35,10 +73,16 @@ export function Contact() {
           transition={{ duration: 0.8 }}
           className="text-center"
         >
-          <h2 className="font-display text-4xl md:text-6xl text-balance">
-            Let's Create Something <em className="font-light italic text-amber-gold">Exquisite</em> Together
+          <p className="text-amber-gold text-[11px] uppercase tracking-[0.4em] font-medium glow-gold-text">
+            Begin Your Inquiry
+          </p>
+          <h2 className="font-display text-4xl md:text-6xl text-balance mt-3">
+            Let's Create Something <em className="font-light italic text-amber-gold glow-gold-text">Exquisite</em> Together
           </h2>
           <div className="mt-5 flex justify-center"><GoldenThread width={48} /></div>
+          <p className="mt-5 text-espresso/75 text-sm md:text-base max-w-xl mx-auto">
+            Your booking form delivers to both our inbox <span className="text-amber-gold font-medium">and</span> our WhatsApp the moment you press send.
+          </p>
         </motion.div>
 
         <motion.div
@@ -46,7 +90,7 @@ export function Contact() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.9, delay: 0.2 }}
-          className="relative mt-16 bg-white p-8 md:p-14 shadow-[0_30px_80px_-40px_rgba(60,42,36,0.3)]"
+          className="relative mt-14 bg-white p-8 md:p-14 shadow-[0_30px_80px_-40px_rgba(60,42,36,0.45)] ring-1 ring-amber-gold/15"
         >
           <AnimatePresence mode="wait">
             {!submitted ? (
@@ -67,9 +111,9 @@ export function Contact() {
                     type="submit"
                     animate={pulsing ? { scale: [1, 1.05, 1] } : {}}
                     transition={{ duration: 0.4 }}
-                    className="gold-sweep w-full md:w-auto bg-amber-gold text-cream px-10 py-4 text-xs tracking-[0.3em] uppercase hover:bg-amber-gold/90 transition-colors relative overflow-hidden"
+                    className="gold-sweep w-full md:w-auto bg-amber-gold text-espresso font-medium px-12 py-4 text-xs tracking-[0.3em] uppercase hover:bg-amber-gold/90 transition-colors relative overflow-hidden shadow-[0_15px_35px_-12px_rgba(200,169,126,0.7)]"
                   >
-                    Begin Your Vision
+                    Send To Email & WhatsApp
                     {pulsing && (
                       <motion.span
                         className="absolute inset-0 bg-amber-gold rounded-full"
@@ -79,6 +123,9 @@ export function Contact() {
                       />
                     )}
                   </motion.button>
+                  <p className="mt-3 text-[11px] text-taupe">
+                    Pressing send opens WhatsApp <span className="text-amber-gold">and</span> your mail app, both pre-filled. One inquiry, two channels.
+                  </p>
                 </div>
               </motion.form>
             ) : (
@@ -90,7 +137,7 @@ export function Contact() {
                 className="text-center py-10"
               >
                 <p className="font-display text-2xl md:text-3xl text-espresso text-balance leading-snug">
-                  Your vision has been received.<br />We'll respond within 24 hours — usually sooner.<br />
+                  Your inquiry is on its way — by email and WhatsApp.<br />We'll respond within 24 hours — usually sooner.<br />
                   <em className="text-amber-gold not-italic font-light italic">We're already excited.</em>
                 </p>
                 <motion.div
@@ -112,7 +159,7 @@ export function Contact() {
           className="mt-12 flex flex-col items-center gap-6"
         >
           <SocialLinks tone="light" />
-          <div className="flex flex-wrap justify-center items-center gap-x-6 gap-y-3 text-sm text-espresso/80">
+          <div className="flex flex-wrap justify-center items-center gap-x-6 gap-y-3 text-sm text-espresso/85">
             <a href={`mailto:${SOCIAL.email}`} className="thread-link">{SOCIAL.email}</a>
             <span className="h-1 w-1 rounded-full bg-amber-gold" />
             <a href={`tel:${SOCIAL.phone}`} className="thread-link">{SOCIAL.whatsappDisplay}</a>
@@ -146,7 +193,7 @@ function Field({
   const Cmp = textarea ? "textarea" : "input";
   return (
     <label className={`relative flex flex-col gap-2 ${className}`}>
-      <span className="text-[10px] uppercase tracking-[0.3em] text-taupe">{label}{required && " *"}</span>
+      <span className="text-[10px] uppercase tracking-[0.3em] text-espresso/70 font-medium">{label}{required && " *"}</span>
       <Cmp
         name={name}
         type={textarea ? undefined : type}
@@ -155,7 +202,7 @@ function Field({
         rows={textarea ? 4 : undefined}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
-        className="bg-transparent border-b border-taupe/30 py-3 text-espresso placeholder:text-taupe/60 focus:outline-none transition-colors resize-none"
+        className="bg-transparent border-b border-espresso/25 py-3 text-espresso placeholder:text-taupe/70 focus:outline-none transition-colors resize-none"
       />
       <motion.span
         aria-hidden
@@ -171,12 +218,12 @@ function SelectField({ label, name, options }: { label: string; name: string; op
   const [focused, setFocused] = useState(false);
   return (
     <label className="relative flex flex-col gap-2">
-      <span className="text-[10px] uppercase tracking-[0.3em] text-taupe">{label}</span>
+      <span className="text-[10px] uppercase tracking-[0.3em] text-espresso/70 font-medium">{label}</span>
       <select
         name={name}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
-        className="bg-transparent border-b border-taupe/30 py-3 text-espresso focus:outline-none"
+        className="bg-transparent border-b border-espresso/25 py-3 text-espresso focus:outline-none"
       >
         {options.map((o) => <option key={o}>{o}</option>)}
       </select>

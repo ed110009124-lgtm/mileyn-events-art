@@ -13,7 +13,7 @@ import { Footer } from "@/components/site/Footer";
 import { ScrollProgress } from "@/components/site/ScrollProgress";
 import { CustomCursor } from "@/components/site/CustomCursor";
 import { ConciergeIndicator } from "@/components/site/ConciergeIndicator";
-import { QuickInquiry } from "@/components/site/QuickInquiry";
+import { FloatingSocials } from "@/components/site/FloatingSocials";
 import { AdminToggle } from "@/components/site/AdminToggle";
 
 export const Route = createFileRoute("/")({
@@ -61,7 +61,7 @@ function Index() {
       <Footer />
 
       <ConciergeIndicator />
-      <QuickInquiry />
+      <FloatingSocials />
       <AdminToggle />
     </main>
   );
