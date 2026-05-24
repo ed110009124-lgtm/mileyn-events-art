@@ -1,28 +1,12 @@
-import { createFileRoute, notFound, Link } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { PROJECTS, type Project } from "@/data/site";
+import { useContent } from "@/lib/content";
 import { DetailLayout } from "@/components/site/DetailLayout";
 
 export const Route = createFileRoute("/portfolio/$slug")({
-  loader: ({ params }) => {
-    const project = PROJECTS.find((p) => p.slug === params.slug);
-    if (!project) throw notFound();
-    return { project };
-  },
-  head: ({ loaderData }) => ({
-    meta: [
-      { title: `${loaderData?.project.name ?? "Project"} — Mileyn Events` },
-      { name: "description", content: loaderData?.project.story ?? "" },
-    ],
+  head: () => ({
+    meta: [{ title: "Project — Mileyn Events" }],
   }),
-  notFoundComponent: () => (
-    <div className="min-h-screen flex items-center justify-center bg-cream text-espresso">
-      <div className="text-center">
-        <h1 className="font-display text-4xl">Project not found</h1>
-        <Link to="/" className="mt-6 inline-block text-amber-gold uppercase tracking-[0.25em] text-xs">← Back home</Link>
-      </div>
-    </div>
-  ),
   errorComponent: ({ error }) => {
     console.error("Portfolio route error:", error);
     return (
@@ -37,7 +21,20 @@ export const Route = createFileRoute("/portfolio/$slug")({
 });
 
 function ProjectPage() {
-  const { project } = Route.useLoaderData() as { project: Project };
+  const { slug } = Route.useParams();
+  const projects = useContent().projects;
+  const project = projects.find((p) => p.slug === slug);
+
+  if (!project) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-cream text-espresso">
+        <div className="text-center">
+          <h1 className="font-display text-4xl">Project not found</h1>
+          <Link to="/" className="mt-6 inline-block text-amber-gold uppercase tracking-[0.25em] text-xs">← Back home</Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <DetailLayout eyebrow={project.type} title={project.name} heroImg={project.img}>
@@ -65,7 +62,7 @@ function ProjectPage() {
       </div>
 
       <div className="mt-16 grid gap-6">
-        {project.gallery.map((src, i) => (
+        {project.gallery.filter(Boolean).map((src, i) => (
           <motion.img
             key={i}
             src={src}
@@ -80,7 +77,7 @@ function ProjectPage() {
         ))}
       </div>
 
-      {project.testimonial && (
+      {project.testimonial?.quote && (
         <blockquote className="mt-16 border-l-2 border-amber-gold pl-6 italic font-display text-2xl text-espresso/90">
           "{project.testimonial.quote}"
           <footer className="mt-4 not-italic text-xs uppercase tracking-[0.3em] text-taupe font-sans">

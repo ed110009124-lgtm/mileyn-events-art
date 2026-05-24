@@ -1,28 +1,14 @@
-import { createFileRoute, notFound, Link } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { SERVICES, type Service } from "@/data/site";
+import { useContent } from "@/lib/content";
 import { DetailLayout } from "@/components/site/DetailLayout";
 
 export const Route = createFileRoute("/services/$slug")({
-  loader: ({ params }) => {
-    const service = SERVICES.find((s) => s.slug === params.slug);
-    if (!service) throw notFound();
-    return { service };
-  },
-  head: ({ loaderData }) => ({
+  head: () => ({
     meta: [
-      { title: `${loaderData?.service.name ?? "Service"} — Mileyn Events` },
-      { name: "description", content: loaderData?.service.tagline ?? "" },
+      { title: "Service — Mileyn Events" },
     ],
   }),
-  notFoundComponent: () => (
-    <div className="min-h-screen flex items-center justify-center bg-cream text-espresso">
-      <div className="text-center">
-        <h1 className="font-display text-4xl">Service not found</h1>
-        <Link to="/" className="mt-6 inline-block text-amber-gold uppercase tracking-[0.25em] text-xs">← Back home</Link>
-      </div>
-    </div>
-  ),
   errorComponent: ({ error }) => {
     console.error("Services route error:", error);
     return (
@@ -37,7 +23,20 @@ export const Route = createFileRoute("/services/$slug")({
 });
 
 function ServicePage() {
-  const { service } = Route.useLoaderData() as { service: Service };
+  const { slug } = Route.useParams();
+  const services = useContent().services;
+  const service = services.find((s) => s.slug === slug);
+
+  if (!service) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-cream text-espresso">
+        <div className="text-center">
+          <h1 className="font-display text-4xl">Service not found</h1>
+          <Link to="/" className="mt-6 inline-block text-amber-gold uppercase tracking-[0.25em] text-xs">← Back home</Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <DetailLayout eyebrow="Service" title={service.name} heroImg={service.img}>
@@ -70,7 +69,7 @@ function ServicePage() {
         <ol className="mt-8 space-y-8">
           {service.process.map((step, i) => (
             <motion.li
-              key={step.title}
+              key={step.title + i}
               initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
