@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { GoldenThread } from "./GoldenThread";
+import { SocialLinks } from "./SocialLinks";
+import { SOCIAL } from "@/data/site";
 
 const EVENT_TYPES = [
   "Wedding",
@@ -102,25 +104,21 @@ export function Contact() {
           </AnimatePresence>
         </motion.div>
 
-        {/* Contact details */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.3, duration: 0.8 }}
-          className="mt-12 flex flex-wrap justify-center items-center gap-x-6 gap-y-3 text-sm text-espresso/80"
+          className="mt-12 flex flex-col items-center gap-6"
         >
-          {[
-            <a key="m" href="mailto:hello@mileynevents.com" className="thread-link">hello@mileynevents.com</a>,
-            <a key="p" href="tel:+254726765010" className="thread-link">0726 765010</a>,
-            <span key="a">By Appointment Only</span>,
-            <span key="r">Western-Nyanza Region</span>,
-          ].map((el, i, arr) => (
-            <div key={i} className="flex items-center gap-6">
-              {el}
-              {i < arr.length - 1 && <span className="h-1 w-1 rounded-full bg-amber-gold" />}
-            </div>
-          ))}
+          <SocialLinks tone="light" />
+          <div className="flex flex-wrap justify-center items-center gap-x-6 gap-y-3 text-sm text-espresso/80">
+            <a href={`mailto:${SOCIAL.email}`} className="thread-link">{SOCIAL.email}</a>
+            <span className="h-1 w-1 rounded-full bg-amber-gold" />
+            <a href={`tel:${SOCIAL.phone}`} className="thread-link">{SOCIAL.whatsappDisplay}</a>
+            <span className="h-1 w-1 rounded-full bg-amber-gold" />
+            <span>By Appointment Only</span>
+          </div>
         </motion.div>
       </div>
     </section>

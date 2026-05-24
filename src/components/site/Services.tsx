@@ -1,14 +1,7 @@
 import { motion } from "framer-motion";
+import { Link } from "@tanstack/react-router";
 import { GoldenThread } from "./GoldenThread";
-
-const SERVICES = [
-  { name: "Luxury Weddings", line: "Heirloom moments, designed in whispers.", img: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=70" },
-  { name: "Corporate Galas & Launches", line: "Brands made memorable, in candlelight.", img: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=70" },
-  { name: "Private Celebrations", line: "Intimate evenings, impeccably orchestrated.", img: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=800&q=70" },
-  { name: "Destination Events", line: "Anywhere in the world. Effortlessly yours.", img: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=800&q=70" },
-  { name: "Floral & Décor Design", line: "Botanical compositions with quiet drama.", img: "https://images.unsplash.com/photo-1487530811176-3780de880c2d?auto=format&fit=crop&w=800&q=70" },
-  { name: "Event Production & Management", line: "Every wire, every cue, invisibly perfect.", img: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=800&q=70" },
-];
+import { SERVICES } from "@/data/site";
 
 export function Services() {
   return (
@@ -31,14 +24,13 @@ export function Services() {
         <div className="mt-16 grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {SERVICES.map((s, i) => (
             <motion.article
-              key={s.name}
+              key={s.slug}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.7, delay: i * 0.08, ease: [0.25, 0.1, 0.25, 1] }}
               className="group relative bg-white border border-amber-gold/30 hover:border-amber-gold transition-all duration-500 hover:shadow-[0_30px_60px_-30px_rgba(200,169,126,0.5)] hover:-translate-y-1.5"
             >
-              {/* Top thread */}
               <motion.span
                 className="absolute left-0 top-0 h-px bg-amber-gold"
                 initial={{ width: 0 }}
@@ -56,13 +48,14 @@ export function Services() {
               </div>
               <div className="p-7">
                 <h3 className="font-display text-2xl text-espresso">{s.name}</h3>
-                <p className="mt-2 text-sm text-taupe font-light">{s.line}</p>
-                <a
-                  href="#contact"
+                <p className="mt-2 text-sm text-taupe font-light">{s.tagline}</p>
+                <Link
+                  to="/services/$slug"
+                  params={{ slug: s.slug }}
                   className="thread-link mt-5 inline-block text-amber-gold text-xs uppercase tracking-[0.25em]"
                 >
                   Discover More →
-                </a>
+                </Link>
               </div>
             </motion.article>
           ))}
