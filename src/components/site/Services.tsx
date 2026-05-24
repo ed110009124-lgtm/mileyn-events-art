@@ -3,6 +3,15 @@ import { Link } from "@tanstack/react-router";
 import { GoldenThread } from "./GoldenThread";
 import { SERVICES } from "@/data/site";
 
+const SERVICE_CTAS = [
+  "Read The Full Story",
+  "See What's Included",
+  "Walk Through The Process",
+  "Plan A Destination",
+  "Step Into The Atelier",
+  "Meet The Production Team",
+];
+
 export function Services() {
   return (
     <section id="services" className="relative bg-cream text-espresso py-28 px-6 md:px-12">
