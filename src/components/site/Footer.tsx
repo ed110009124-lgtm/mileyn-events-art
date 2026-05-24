@@ -1,5 +1,6 @@
-import { Instagram, Facebook } from "lucide-react";
 import { GoldenThread } from "./GoldenThread";
+import { SocialLinks } from "./SocialLinks";
+import { SOCIAL } from "@/data/site";
 
 export function Footer() {
   return (
@@ -16,24 +17,19 @@ export function Footer() {
           Curators of refined experiences.
         </p>
 
-        <div className="mt-12 flex gap-4">
-          {[
-            { Icon: Instagram, href: "https://instagram.com" },
-            { Icon: Facebook, href: "https://facebook.com" },
-          ].map(({ Icon, href }, i) => (
-            <a
-              key={i}
-              href={href}
-              target="_blank"
-              rel="noreferrer"
-              className="group flex h-10 w-10 items-center justify-center rounded-full border border-amber-gold/60 transition-colors hover:bg-amber-gold"
-            >
-              <Icon className="h-4 w-4 text-amber-gold transition-colors group-hover:text-espresso" strokeWidth={1.4} />
-            </a>
-          ))}
+        <div className="mt-12">
+          <SocialLinks tone="dark" />
         </div>
 
-        <div className="mt-12 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[11px] uppercase tracking-[0.25em] text-cream/70">
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-cream/70">
+          <a href={`mailto:${SOCIAL.email}`} className="hover:text-amber-gold transition-colors">{SOCIAL.email}</a>
+          <span className="h-1 w-1 rounded-full bg-amber-gold/60" />
+          <a href={`tel:${SOCIAL.phone}`} className="hover:text-amber-gold transition-colors">{SOCIAL.whatsappDisplay}</a>
+          <span className="h-1 w-1 rounded-full bg-amber-gold/60" />
+          <a href={`https://instagram.com/${SOCIAL.instagram}`} target="_blank" rel="noreferrer" className="hover:text-amber-gold transition-colors">@{SOCIAL.instagram}</a>
+        </div>
+
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[11px] uppercase tracking-[0.25em] text-cream/70">
           <a href="#" className="hover:text-amber-gold transition-colors">Privacy</a>
           <span className="h-1 w-1 rounded-full bg-amber-gold/60" />
           <a href="#" className="hover:text-amber-gold transition-colors">Terms</a>
