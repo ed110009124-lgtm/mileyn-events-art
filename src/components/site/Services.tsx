@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "@tanstack/react-router";
 import { GoldenThread } from "./GoldenThread";
-import { SERVICES } from "@/data/site";
+import { useContent } from "@/lib/content";
 
 const SERVICE_CTAS = [
   "Read The Full Story",
@@ -13,6 +13,7 @@ const SERVICE_CTAS = [
 ];
 
 export function Services() {
+  const SERVICES = useContent().services;
   return (
     <section id="services" className="relative bg-cream text-espresso py-28 px-6 md:px-12">
       <div className="mx-auto max-w-7xl">

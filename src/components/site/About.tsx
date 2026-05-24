@@ -1,15 +1,9 @@
 import { motion } from "framer-motion";
 import { GoldenThread } from "./GoldenThread";
-import aboutImg from "@/assets/about-editorial.jpg";
-
-const BULLETS = [
-  "Curated Design",
-  "Precision Planning",
-  "Seamless Execution",
-  "Lasting Impressions",
-];
+import { useContent } from "@/lib/content";
 
 export function About() {
+  const c = useContent().about;
   return (
     <section id="about" className="relative bg-cream text-espresso py-28 px-6 md:px-12">
       <div className="mx-auto max-w-7xl">
@@ -21,14 +15,13 @@ export function About() {
           className="max-w-3xl"
         >
           <h2 className="font-display text-4xl md:text-6xl text-balance leading-tight">
-            Exquisite Is Not A Word.<br />
-            <em className="font-light italic text-amber-gold">It's Our Standard.</em>
+            {c.headingTop}<br />
+            <em className="font-light italic text-amber-gold">{c.headingEm}</em>
           </h2>
           <div className="mt-6"><GoldenThread width={48} /></div>
         </motion.div>
 
         <div className="mt-16 grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
-          {/* Image with silk reveal */}
           <motion.div
             initial="hidden"
             whileInView="show"
@@ -36,8 +29,8 @@ export function About() {
             className="relative aspect-[4/5] overflow-hidden"
           >
             <motion.img
-              src={aboutImg}
-              alt="Hands arranging white peonies on marble"
+              src={c.image}
+              alt="Mileyn Events"
               loading="lazy"
               width={1024}
               height={1024}
@@ -59,15 +52,10 @@ export function About() {
             transition={{ duration: 0.9, delay: 0.2 }}
             className="space-y-6 text-espresso/90"
           >
-            <p className="text-lg leading-relaxed font-light">
-              At Mileyn Events, we don't plan parties. We compose experiences. Every detail — from the weight of the cutlery to the angle of the lighting — is considered, refined, and executed with quiet precision.
-            </p>
-            <p className="text-lg leading-relaxed font-light">
-              We've learned that true luxury isn't loud. It's the pause between moments. The breath a guest takes when they first enter a room. The silence before applause. We design for that silence.
-            </p>
-
+            <p className="text-lg leading-relaxed font-light">{c.p1}</p>
+            <p className="text-lg leading-relaxed font-light">{c.p2}</p>
             <ul className="grid grid-cols-2 gap-x-8 gap-y-4 pt-4">
-              {BULLETS.map((b) => (
+              {c.bullets.map((b) => (
                 <li key={b} className="flex items-center gap-3 text-sm">
                   <span className="h-1 w-1 rounded-full bg-amber-gold" />
                   <span className="tracking-wide">{b}</span>

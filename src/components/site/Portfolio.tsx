@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Link } from "@tanstack/react-router";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { GoldenThread } from "./GoldenThread";
-import { PROJECTS } from "@/data/site";
+import { useContent } from "@/lib/content";
 
 const PORTFOLIO_CTAS = [
   "Step Inside",
@@ -15,6 +15,7 @@ const PORTFOLIO_CTAS = [
 ];
 
 export function Portfolio() {
+  const PROJECTS = useContent().projects;
   const scrollerRef = useRef<HTMLDivElement>(null);
 
   const scroll = (dir: 1 | -1) => {
