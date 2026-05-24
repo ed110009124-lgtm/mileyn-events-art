@@ -23,11 +23,16 @@ export const Route = createFileRoute("/services/$slug")({
       </div>
     </div>
   ),
-  errorComponent: ({ error }) => (
-    <div className="min-h-screen flex items-center justify-center bg-cream text-espresso">
-      <p>{error.message}</p>
-    </div>
-  ),
+  errorComponent: ({ error }) => {
+    console.error("Services route error:", error);
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-cream text-espresso px-6">
+        <p className="text-center font-display text-xl">
+          Something went wrong. Please try again or return home.
+        </p>
+      </div>
+    );
+  },
   component: ServicePage,
 });
 
