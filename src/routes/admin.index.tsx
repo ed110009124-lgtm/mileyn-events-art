@@ -1,9 +1,16 @@
-import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, Link, redirect } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { DEFAULT_CONTENT, type SiteContent, saveContent, uploadImage } from "@/lib/content";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/admin/")({
+  beforeLoad: async () => {
+    if (typeof window === "undefined") return;
+    const { data, error } = await supabase.auth.getUser();
+    if (error || !data.user) {
+      throw redirect({ to: "/admin/login" });
+    }
+  },
   component: AdminDashboard,
 });
 
