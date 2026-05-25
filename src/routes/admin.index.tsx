@@ -40,17 +40,20 @@ function AdminDashboard() {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    if (sessionStorage.getItem("mileyn-admin") !== "1") {
-      navigate({ to: "/admin/login" });
-      return;
-    }
+    let active = true;
     (async () => {
+      const { data: sess } = await supabase.auth.getSession();
+      if (!sess.session) {
+        navigate({ to: "/admin/login" });
+        return;
+      }
       try {
         const { data } = await supabase
           .from("site_content")
           .select("data")
           .eq("id", "singleton")
           .maybeSingle();
+        if (!active) return;
         const over = (data?.data as Partial<SiteContent>) || null;
         const merged: any = { ...DEFAULT_CONTENT };
         if (over) {
@@ -64,10 +67,18 @@ function AdminDashboard() {
         }
         setContent(merged);
       } finally {
-        setLoading(false);
+        if (active) setLoading(false);
       }
     })();
+    const { data: listener } = supabase.auth.onAuthStateChange((_e, s) => {
+      if (!s) navigate({ to: "/admin/login" });
+    });
+    return () => {
+      active = false;
+      listener.subscription.unsubscribe();
+    };
   }, [navigate]);
+
 
   const save = async () => {
     setSaving(true);
@@ -81,10 +92,11 @@ function AdminDashboard() {
     }
   };
 
-  const logout = () => {
-    sessionStorage.removeItem("mileyn-admin");
+  const logout = async () => {
+    await supabase.auth.signOut();
     navigate({ to: "/admin/login" });
   };
+
 
   const reset = () => {
     if (confirm("Reset ALL content back to factory defaults? This cannot be undone.")) {
